@@ -2,6 +2,7 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
+  Navigate,
 } from "react-router-dom";
 import Home from "./pages/home/Home";
 import Blog from "./pages/blog/Blog";
@@ -26,8 +27,12 @@ function App() {
           <Route path="/bloginfo/:id" element={<BlogInfo />} />
           <Route path="/adminlogin" element={<AdminLogin />} />
           <Route path="/adminsignup" element={<AdminSignup />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/createblog" element={<CreateBlog />} />
+          <Route path="/dashboard" element={<ProtectedRouteForAdmin>
+            <Dashboard />
+          </ProtectedRouteForAdmin>} />
+          <Route path="/createblog" element={<ProtectedRouteForAdmin>
+            <CreateBlog />
+          </ProtectedRouteForAdmin>} />
           <Route path="/*" element={<NoPage />} />
         </Routes>
         <Toaster/>
@@ -37,3 +42,13 @@ function App() {
 }
 
 export default App
+
+export const ProtectedRouteForAdmin = ({ children }) => {
+  const admin = JSON.parse(localStorage.getItem('admin'))
+  if (admin?.user?.email === "rayabhishek9438@gmail.com") {
+    return children
+  }
+  else {
+    return <Navigate to={'/adminlogin'}/>
+  }
+}

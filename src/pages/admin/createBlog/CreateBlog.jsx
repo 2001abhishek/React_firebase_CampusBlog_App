@@ -2,27 +2,86 @@ import React, { useState, useContext } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import { BsFillArrowLeftCircleFill } from "react-icons/bs"
 import myContext from '../../../context/data/myContext';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import {Timestamp, addDoc, collection} from 'firebase/firestore'
 import {
     Button,
     Typography,
 } from "@material-tailwind/react";
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { fireDB, storage } from '../../../firebase/FirebaseConfig';
+import {toast} from 'react-hot-toast';
+import Layout from '../../../components/layout/Layout';
+
+
 function CreateBlog() {
     const context = useContext(myContext);
     const { mode } = context;
 
-    const [blogs, setBlogs] = useState('');
+    const [blogs, setBlogs] = useState({
+        title: '',
+        category: '',
+        cardesc:'',
+        content: '',
+        time: Timestamp.now(),
+});
     const [thumbnail, setthumbnail] = useState();
 
     const [text, settext] = useState('');
     console.log("Value: ",);
     console.log("text: ", text);
 
+    const navigate = useNavigate()
+
+    const handleAddPost  = async () => {
+        if (blogs.title === "" || blogs.category === "" || blogs.content === "" || blogs.thumbnail === "" || blogs.cardesc === "") {
+            toast.error('Please Fill All Fields');
+        }
+        // console.log(blogs.content)
+        uploadImage()
+        
+}
+
+const uploadImage = () => {
+    if (!thumbnail) return;
+    const imageRef = ref(storage, `blogimage/${thumbnail.name}`);
+    uploadBytes(imageRef, thumbnail).then((snapshot) => {
+        getDownloadURL(snapshot.ref).then((url) => {
+            const productRef = collection(fireDB, "blogPost")
+            try {
+                addDoc(productRef, {
+                    blogs,
+                    thumbnail: url,
+                    time: Timestamp.now(),
+                    date: new Date().toLocaleString(
+                        "en-US",
+                        {
+                            month: "short",
+                            day: "2-digit",
+                            year: "numeric",
+                        }
+                    )
+                })
+                navigate('/dashboard')
+                toast.success('Post Added Successfully');
+
+
+            } catch (error) {
+                toast.error(error)
+                console.log(error)
+            }
+        });
+    });
+}
     // Create markup function 
     function createMarkup(c) {
         return { __html: c };
     }
+
+    
+    
     return (
+        <Layout>
         <div className=' container mx-auto max-w-5xl py-6'>
             <div className="p-5" style={{
                 background: mode === 'dark'
@@ -103,6 +162,26 @@ function CreateBlog() {
                                 : 'rgb(226, 232, 240)'
                         }}
                         name="title"
+                        value={blogs.title}
+                        onChange={(e)=> setBlogs({...blogs,title:e.target.value})}
+                    />
+                </div>
+                <div className="mb-3">
+                    <input
+                        label="Enter your Card desc"
+                       className={`shadow-[inset_0_0_4px_rgba(0,0,0,0.6)] w-full rounded-md p-1.5 
+                 outline-none ${mode === 'dark'
+                 ? 'placeholder-black'
+                 : 'placeholder-black'}`}
+                        placeholder="Enter Your Blog Description"
+                        style={{
+                            background: mode === 'dark'
+                                ? '#dcdde1'
+                                : 'rgb(226, 232, 240)'
+                        }}
+                        name="cardesc"
+                        value={blogs.cardesc}
+                        onChange={(e)=> setBlogs({...blogs,cardesc:e.target.value})}
                     />
                 </div>
 
@@ -121,6 +200,8 @@ function CreateBlog() {
                                 : 'rgb(226, 232, 240)'
                         }}
                         name="category"
+                        value={blogs.category}
+                        onChange={(e)=> setBlogs({...blogs,category:e.target.value})}
                     />
                 </div>
 
@@ -128,7 +209,7 @@ function CreateBlog() {
                 <Editor
                     apiKey='ufnblw8azwaw4qkujredievfj1tjmil0mx6zmnux2ali439f'
                     onEditorChange={(newValue, editor) => {
-                        setBlogs({ blogs, content: newValue });
+                        setBlogs({ ...blogs, content: newValue });
                         settext(editor.getContent({ format: 'text' }));
                     }}
                     onInit={(evt, editor) => {
@@ -141,6 +222,7 @@ function CreateBlog() {
 
                 {/* Five Submit Button  */}
                 <Button className=" w-full mt-5"
+                onClick={handleAddPost}
                     style={{
                         background: mode === 'dark'
                             ? 'rgb(226, 232, 240)'
@@ -196,6 +278,7 @@ function CreateBlog() {
         </div >
             </div >
         </div >
+        </Layout>
     )
 }
 

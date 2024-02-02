@@ -1,5 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import MyContext from './myContext';
+import { collection, query, onSnapshot, orderBy } from 'firebase/firestore';
+import { fireDB } from '../../firebase/FirebaseConfig';
+
 
 function MyState(props) {
     const [mode, setMode] = useState('light'); // Whether dark mode is enabled or not
@@ -13,8 +16,44 @@ function MyState(props) {
             document.body.style.backgroundColor = 'white';
         }
     }
+
+    const [searchkey, setSearchkey] = useState('')
+    const [loading, setloading] = useState(false);
+
+    const [getAllBlog, setGetAllBlog] = useState([]);
+
+    function getAllBlogs() {
+        setloading(true);
+        try {
+            const q = query(
+                collection(fireDB, "blogPost"),
+                orderBy('time')
+            );
+            const data = onSnapshot(q, (QuerySnapshot) => {
+                let blogArray = [];
+                QuerySnapshot.forEach((doc) => {
+                    blogArray.push({ ...doc.data(), id: doc.id });
+                });
+                
+                setGetAllBlog(blogArray)
+                // console.log(productsArray)   
+                         setloading(false)
+    
+            });
+            return () => data;
+        } catch (error) {
+            console.log(error)
+            setloading(false)
+        }
+    }
+    
+    useEffect(() => {
+        getAllBlogs();
+    }, []);
+
     return (
-        <MyContext.Provider value={{ mode, toggleMode }}>
+        <MyContext.Provider value={{ mode, toggleMode, 
+        searchkey, setSearchkey, loading, setloading, getAllBlog }}>
             {props.children}
         </MyContext.Provider>
     )
