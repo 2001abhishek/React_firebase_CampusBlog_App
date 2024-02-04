@@ -5,6 +5,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import { fireDB } from '../../firebase/FirebaseConfig';
 import Layout from '../../components/layout/Layout';
 import Loader from '../../components/loader/Loader';
+import Comment from '../../components/comment/Comment';
 
 
 function BlogInfo() {
@@ -92,6 +93,7 @@ function BlogInfo() {
             </div>
           }
         </div>
+        <Comment/>
       </section>
     </Layout>
   )
