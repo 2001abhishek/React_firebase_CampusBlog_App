@@ -1,4 +1,3 @@
-import { Typography } from '@material-tailwind/react'
 import React, { useContext } from 'react'
 import myContext from '../../context/data/myContext';
 
@@ -6,25 +5,27 @@ function HeroSection() {
     const context = useContext(myContext);
     const { mode } = context;
     return (
-      <section  style={{ background: mode === 'dark' ? 'rgb(30, 41, 59)' : '#30336b' }}>
-       {/* class="bg-white dark:bg-gray-900">  */}
-      <div class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
-          <div class="mr-auto place-self-center lg:col-span-7">
-              <h1 class="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white">Samsung AI features in new Galaxy S24 series</h1>
-              <p class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">From checkout to global sales tax compliance, companies around the world use Flowbite to simplify their payment stack.</p>
-              <a href="/nopage" class="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
-                  Get started
-                  <svg class="w-5 h-5 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-              </a>
-              <a href="/nopage" class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
-                  Speak to Sales
-              </a> 
-          </div>
-          <div class="hidden lg:mt-0 lg:col-span-5 lg:flex">
-              <img src="https://www.pngall.com/wp-content/uploads/13/Galaxy-S23-Ultra-Transparent.png" alt="mockup"/>
-          </div>                
-      </div>
-  </section>
+        <section>
+        <div 
+        className="bg-black text-white py-20"
+         style={{ background: mode === 'dark' ? 'rgb(30, 41, 59)' : '#30336b' }}>
+            <div className="container mx-auto flex flex-col md:flex-row items-center my-12 md:my-24">
+                <div className="flex flex-col w-full lg:w-1/3 justify-center items-start p-8">
+                    <h1 className="text-3xl md:text-5xl p-2 text-yellow-300 tracking-loose">TechFest</h1>
+                    <h2 className="text-3xl md:text-5xl leading-relaxed md:leading-snug mb-2">Space : The Timeless Infinity</h2>
+                    <p className="text-sm md:text-base text-gray-50 mb-4">Explore your favourite events and register now to showcase your talent and win exciting prizes.</p>
+                    <a href="#" className="bg-transparent hover:bg-yellow-300 text-yellow-300 hover:text-black rounded shadow hover:shadow-lg py-2 px-4 border border-yellow-300 hover:border-transparent">Explore Now</a>
+                </div>
+                <div className="p-8 mt-12 mb-6 md:mb-0 md:mt-0 ml-0 md:ml-12 lg:w-2/3 justify-center">
+                    <div className="h-48 flex flex-wrap content-center">
+                        <div><img className=" mt-28 hidden xl:block" src="https://user-images.githubusercontent.com/54521023/116969935-c13d5b00-acd4-11eb-82b1-5ad2ff10fb76.png" alt="mockup1" /></div>
+                        <div><img className="inline-block mt-24 md:mt-0 p-8 md:p-0" src="https://user-images.githubusercontent.com/54521023/116969931-bedb0100-acd4-11eb-99a9-ff5e0ee9f31f.png" alt="mockup2" /></div>
+                        <div><img className=" mt-28 hidden lg:block" src="https://user-images.githubusercontent.com/54521023/116969939-c1d5f180-acd4-11eb-8ad4-9ab9143bdb50.png" alt="mockup3" /></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     )
 }
 

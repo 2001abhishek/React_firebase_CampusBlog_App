@@ -7,12 +7,12 @@ import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDnz3TwzZpskKDMA9aIu30-cCJdeFovjzs",
-  authDomain: "campusblog-webapp.firebaseapp.com",
-  projectId: "campusblog-webapp",
-  storageBucket: "campusblog-webapp.appspot.com",
-  messagingSenderId: "482660979005",
-  appId: "1:482660979005:web:02d05d46500c25f2e1f554"
+  apiKey: import.meta.env.VITE_apiKey ,
+  authDomain: import.meta.env.VITE_authDomain ,
+  projectId:import.meta.env.VITE_projectId ,
+  storageBucket:import.meta.env.VITE_storageBucket ,
+  messagingSenderId:import.meta.env.VITE_messagingSenderId ,
+  appId:import.meta.env.VITE_appId
 };
 
 // Initialize Firebase

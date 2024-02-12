@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
 import myContext from '../../context/data/myContext';
 import { useParams } from 'react-router';
-import { doc, getDoc } from 'firebase/firestore';
+import { Timestamp, addDoc, collection, doc, getDoc, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { fireDB } from '../../firebase/FirebaseConfig';
 import Layout from '../../components/layout/Layout';
-import Loader from '../../components/loader/Loader';
+import Loader from '../../components/loader/loader';
 import Comment from '../../components/comment/Comment';
+
 
 
 function BlogInfo() {
@@ -45,6 +46,37 @@ function BlogInfo() {
   function createMarkup(c) {
     return { __html: c };
   }
+
+  const [fullName, setFullName] = useState(''); //user input
+  const [commentText, setCommentText] = useState('');
+
+  
+
+  const [allComment, setAllComment] = useState([]);
+
+  const getcomment = async () => {
+    try {
+      const q = query(
+        collection(fireDB, "blogPost/" + `${params.id}/` + "comment/"),
+        orderBy('time')
+      );
+      const data = onSnapshot(q, (QuerySnapshot) => {
+        let productsArray = [];
+        QuerySnapshot.forEach((doc) => {
+          productsArray.push({ ...doc.data(), id: doc.id });
+        });
+        setAllComment(productsArray)
+        console.log(productsArray)
+      });
+      return () => data;
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  
+  useEffect(() => {
+    getcomment()
+  }, []);
 
   return (
     <Layout>
@@ -93,7 +125,14 @@ function BlogInfo() {
             </div>
           }
         </div>
-        <Comment/>
+        {/* passing props */}
+        <Comment
+            commentText={commentText}
+            setcommentText={setCommentText}
+            allComment={allComment}
+            fullName={fullName}
+            setFullName={setFullName}
+        />
       </section>
     </Layout>
   )

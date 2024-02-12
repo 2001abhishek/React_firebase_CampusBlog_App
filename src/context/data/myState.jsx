@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import MyContext from './myContext';
-import { collection, query, onSnapshot, orderBy } from 'firebase/firestore';
+import { collection, query, onSnapshot, orderBy, doc, deleteDoc } from 'firebase/firestore';
 import { fireDB } from '../../firebase/FirebaseConfig';
+import { useAuthState } from 'react-firebase-hooks/auth'; // manage the authentication state of the user
+import { auth } from '../../firebase/FirebaseConfig'; // Import auth object
+import toast from 'react-hot-toast';
 
 
 function MyState(props) {
@@ -51,9 +54,22 @@ function MyState(props) {
         getAllBlogs();
     }, []);
 
+    const [user] = useAuthState(auth); // Get the current user
+
+    // Blog Delete Function 
+    const deleteBlogs = async (id) => {
+        try {
+            await deleteDoc(doc(fireDB, "blogPost", id));
+            getAllBlogs()
+            toast.success("Blogs deleted successfully")
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <MyContext.Provider value={{ mode, toggleMode, 
-        searchkey, setSearchkey, loading, setloading, getAllBlog }}>
+        searchkey, setSearchkey, loading, setloading, getAllBlog, user, deleteBlogs   }}>
             {props.children}
         </MyContext.Provider>
     )

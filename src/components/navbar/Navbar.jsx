@@ -20,22 +20,24 @@ import { AiOutlineShareAlt, AiOutlineSearch } from 'react-icons/ai'
 import myContext from "../../context/data/myContext";
 import SearchDialog from "../searchDialog/SearchDialog";
 import ShareDialogBox from "../shareDialogBox/ShareDialogBox";
+import { auth } from "../../firebase/FirebaseConfig"; // Assuming you have initialized Firebase authentication
+
 
 
 export default function Nav() {
+
     const [openNav, setOpenNav] = React.useState(false);
 
     const context = useContext(myContext);
-    const { mode, toggleMode } = context;
+    const { mode, toggleMode, user } = context;
 
     const admin = localStorage.getItem('admin');
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen((cur) => !cur);
     const handleLogout = () => {
-        // Clear admin information from localStorage
-        localStorage.removeItem('admin');
-        // Other logout logic if needed
+        auth.signOut(); // Sign out the user using Firebase Authentication
+        localStorage.clear(); //local storage will clear after logout
     };
     // All NavList 
     const navList = (
@@ -62,25 +64,36 @@ export default function Nav() {
                     Blogs
                 </Link>
             </Typography>
-            <Typography
-    as="li"
-    variant="small"
-    color="blue-gray"
-    className="p-1 font-normal"
-    style={{ color: mode === 'dark' ? 'white' : 'white' }}
->
-    {admin ? (
-        // Admin is logged in, show logout button
-        <Link to={'/'} onClick={handleLogout} className="flex items-center">
-            Logout
-        </Link>
-    ) : (
-        // Admin is not logged in, show login button
-        <Link to={'/adminlogin'} className="flex items-center">
-            Login
-        </Link>
-    )}
-</Typography>
+            {user && // Check if user is signed in
+                        <Typography
+                            as="li"
+                            variant="small"
+                            color="blue-gray"
+                            className="p-1 font-normal"
+                            style={{ color: mode === 'dark' ? 'white' : 'white' }}
+                        ><b>
+                            {user.displayName} </b> {/* Display user's display name */}
+                        </Typography>
+                    }
+                    <Typography
+                        as="li"
+                        variant="small"
+                        color="blue-gray"
+                        className="p-1 font-normal"
+                        style={{ color: mode === 'dark' ? 'white' : 'white' }}
+                    >
+                        {user ? (
+                            // If user is signed in, show logout button
+                            <Link to={'/'} onClick={handleLogout} className="flex items-center">
+                                Logout
+                            </Link>
+                        ) : (
+                            // If user is not signed in, show login button
+                            <Link to={'/adminlogin'} className="flex items-center">
+                                Login
+                            </Link>
+                        )}
+                    </Typography>
         </ul>
     );
 

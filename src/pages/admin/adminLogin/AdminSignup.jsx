@@ -4,6 +4,8 @@ import { auth } from "../../../firebase/FirebaseConfig";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import myContext from "../../../context/data/myContext";
+import Layout from "../../../components/layout/Layout";
+
 
 export default function AdminSignup() {
   const context = useContext(myContext);
@@ -40,6 +42,7 @@ export default function AdminSignup() {
 
 
     return (
+      <Layout>  
       <section
       style={{ background: mode === 'dark'
 
@@ -52,12 +55,12 @@ export default function AdminSignup() {
         <div className="md:w-1/3 max-w-sm">
         
           
-        <input
+        {/* <input
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded"
           type="text"
-          placeholder="Email Address"
+          placeholder="Admin Email Address"
         />
         <input
           value={password}
@@ -71,7 +74,6 @@ export default function AdminSignup() {
               <input className="mr-1" type="checkbox" />
               <span>Remember Me</span>
             </label>
-            <a className="text-blue-600 hover:text-blue-700 hover:underline hover:underline-offset-4" href="#">Forgot Password?</a>
           </div>
           <div className="text-center md:text-left">
           <button
@@ -81,9 +83,10 @@ export default function AdminSignup() {
           >
             Signup with Email
           </button>
-          </div>
+          </div> */}
           <div className="my-5 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300">
-            <p className="mx-4 mb-0 text-center font-semibold text-slate-500">Or</p>
+            <p style={{ color: mode === 'dark' ? 'white' : 'black' }}
+             className="mx-4 mb-0 text-center font-semibold text-slate-500">Hello! Please choose your signup method</p>
           </div>
           <div class="flex items-center justify-center mt-3 bg-gray- dark:bg-gray-700">
           <button
@@ -123,10 +126,12 @@ export default function AdminSignup() {
         <span>Sign In with Github</span>
     </button>
 </div>
-          <div className="mt-4 font-semibold text-sm text-slate-500 text-center md:text-left">
+          <div style={{ color: mode === 'dark' ? 'white' : 'black' }}
+          className="mt-4 font-semibold text-sm text-slate-500 text-center md:text-left">
             Already have an account? <a className="text-red-600 hover:underline hover:underline-offset-4" href="/adminlogin">Login</a>
           </div>
         </div>
       </section>
+      </Layout>
     );
   }
