@@ -117,11 +117,11 @@ export default function Nav() {
                             {/* Logo Image  */}
                             <img
                                 className=' w-10 h-10 '
-                                src='https://cdn-icons-png.flaticon.com/128/8901/8901481.png'
+                                src='https://cdn-icons-png.freepik.com/512/11873/11873624.png?ga=GA1.1.2000320559.1707742686&'
                             />
                             {/* Logo Text  */}
                             <span>
-                                CampusBlog
+                                The Journey
                             </span>
                         </Typography>
                     </Link>

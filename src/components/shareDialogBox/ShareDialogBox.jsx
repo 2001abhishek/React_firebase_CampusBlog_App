@@ -77,7 +77,7 @@ export default function ShareDialogBox() {
                     </div>
 
                     <div className=" text-center">
-                        <h1 className=" text-gray-600">Powered By Austin</h1>
+                        <h1 className=" text-gray-600">Powered By theJourney</h1>
                     </div>
                 </DialogBody>
             </Dialog>

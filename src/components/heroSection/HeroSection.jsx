@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import myContext from '../../context/data/myContext';
 
 function HeroSection() {
@@ -11,8 +11,8 @@ function HeroSection() {
          style={{ background: mode === 'dark' ? 'rgb(30, 41, 59)' : '#30336b' }}>
             <div className="container mx-auto flex flex-col md:flex-row items-center my-12 md:my-24">
                 <div className="flex flex-col w-full lg:w-1/3 justify-center items-start p-8">
-                    <h1 className="text-3xl md:text-5xl p-2 text-yellow-300 tracking-loose">TechFest</h1>
-                    <h2 className="text-3xl md:text-5xl leading-relaxed md:leading-snug mb-2">Space : The Timeless Infinity</h2>
+                    <h1 className="text-3xl md:text-4xl p-2 tracking-loose">Let's Travel With</h1>
+                    <h2 className="text-3xl md:text-5xl  text-yellow-300 leading-relaxed md:leading-snug mb-2">Science & Technolgy</h2>
                     <p className="text-sm md:text-base text-gray-50 mb-4">Explore your favourite events and register now to showcase your talent and win exciting prizes.</p>
                     <a href="#" className="bg-transparent hover:bg-yellow-300 text-yellow-300 hover:text-black rounded shadow hover:shadow-lg py-2 px-4 border border-yellow-300 hover:border-transparent">Explore Now</a>
                 </div>
