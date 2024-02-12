@@ -43,7 +43,7 @@ export default App
 
 export const ProtectedRouteForAdmin = ({ children }) => {
   const admin = JSON.parse(localStorage.getItem('admin'))
-  if (admin?.user?.email === "rayabhishek9438@gmail.com") {
+  if (admin?.user?.email === "VITE_ADMIN_EMAILS") {
     return children
   }
   else {
