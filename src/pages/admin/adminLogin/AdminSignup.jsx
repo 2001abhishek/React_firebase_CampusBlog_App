@@ -53,37 +53,6 @@ export default function AdminSignup() {
             alt="Sample image" />
         </div>
         <div className="md:w-1/3 max-w-sm">
-        
-          
-        {/* <input
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded"
-          type="text"
-          placeholder="Admin Email Address"
-        />
-        <input
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4"
-          type="password"
-          placeholder="Password"
-        />
-          <div className="mt-4 flex justify-between font-semibold text-sm">
-            <label className="flex text-slate-500 hover:text-slate-600 cursor-pointer">
-              <input className="mr-1" type="checkbox" />
-              <span>Remember Me</span>
-            </label>
-          </div>
-          <div className="text-center md:text-left">
-          <button
-            onClick={handleEmailSignup}
-            className="mt-4 bg-blue-600 hover:bg-blue-700 px-4 py-2 text-white uppercase rounded text-xs tracking-wider"
-            type="submit"
-          >
-            Signup with Email
-          </button>
-          </div> */}
           <div className="my-5 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300">
             <p style={{ color: mode === 'dark' ? 'white' : 'black' }}
              className="mx-4 mb-0 text-center font-semibold text-slate-500">Hello! Please choose your signup method</p>
